@@ -86,11 +86,11 @@ public class Review {
   /**
    * @returns the sentiment value of word as a number between -1 (very negative) to 1 (very positive sentiment) 
    */
-  public static double sentimentVal( String word )
+  public static double sentimentVal(String word)
   {
     try
     {
-      return sentiment.get(word.toLowerCase());
+      return sentiment.get(removePunctuation(word.toLowerCase()));
     }
     catch(Exception e)
     {
@@ -98,6 +98,79 @@ public class Review {
     }
   }
   
+  public static double totalSentiment(String fileName)
+  {
+    String review = textToString(fileName);
+    double total = 0.0;
+    while (review.indexOf(" ") > 0)
+    {
+  int space = review.indexOf(" ");
+  String word = review.substring(0, space);
+  double sentiment = sentimentVal(word);
+  total+= sentiment;
+  review = review.substring(space+1);
+    }
+    total += sentimentVal(review);
+    return total;
+  }
+
+  public static int starRating(String fileName)
+  {
+    {
+      //get total sentiment
+      double sentiment = totalSentiment(fileName);
+      //check sentiment against thresholds
+      //return appropriate star starRating
+      if (sentiment > 20){
+        return 5;
+      } else if (sentiment > 10){
+        return 4;
+      } else if (sentiment > 0){
+        return 3;
+      } else if (sentiment > -10){
+        return 2;
+      } else{
+        return 1;
+      }
+  
+    }
+  }
+
+
+  public static String fakeReview(String fileName, String PosNeg){
+	  //get the review in a string
+	  String review = textToString(fileName);
+
+	  //empty string for new review
+	  String newReview = "";
+
+    //Use POSNEg and determine iff the value of POsneg is negative or positive
+	  //loop through the string
+	  while (review.indexOf("*")>0 && review.length()>0)
+	  {
+		  //look for *, 
+		  int starLoc = review.indexOf("*");
+	  	  //add everything before the * to new review
+		  newReview += review.substring(0, starLoc);
+		  //add a random adjective to new review
+//choose an adjective 
+if (PosNeg.toLowerCase().equals("positive"))
+{newReview+= randomPositiveAdj();}
+		  newReview += randomAdjective();
+		  //cut off old review through starred adjective
+		  int spaceAfterStar = review.indexOf(" ", starLoc);
+		  newReview = review.substring(spaceAfterStar);
+
+		//   System.out.println("__");
+		 System.out.println(newReview);
+
+	  }
+ //public static String chooseSentiment (String placeholder)
+  //{
+    //need a scanner to ask if user wants negative review or positive
+    //ask for a bunch of adjectives in scanner 
+    return newReview ;
+  }
   /**
    * Returns the ending punctuation of a string, or the empty string if there is none 
    */
@@ -149,7 +222,29 @@ public class Review {
     return negAdjectives.get(index);
     
   }
-  
+  public static String bigSHOT(String fileName, String hyperlinkblocked)
+  {
+    String review = textToString(fileName);
+    String newKROMER = "";
+    while (review.indexOf("*")>0 && review.length()>0)
+	  {
+		  //look for *, 
+		  int starLoc = review.indexOf("*");
+      int starlock = review.indexOf(" ");
+	  	  //add everything before the * to new review
+		  newKROMER += review.substring(starLoc, starlock);
+      
+		  //add a random adjective to new review
+//choose an adjective 
+if (hyperlinkblocked.toLowerCase().equals("positive"))
+{newKROMER+= randomPositiveAdj();}
+		  newKROMER += randomAdjective();
+		  //cut off old review through starred adjective
+		  int spaceAfterStar = review.indexOf(" ", starLoc);
+		  newKROMER = review.substring(spaceAfterStar);
+    }
+    return newKROMER.toUpperCase();
+  }
   /** 
    * Randomly picks a positive or negative adjective and returns it.
    */
