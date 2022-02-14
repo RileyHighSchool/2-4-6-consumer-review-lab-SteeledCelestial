@@ -155,7 +155,7 @@ public class Review {
 		  //add a random adjective to new review
 //choose an adjective 
 if (PosNeg.toLowerCase().equals("positive"))
-{newReview+= randomPositiveAdj();}
+  {newReview+= randomPositiveAdj();//}
 		  newReview += randomAdjective();
 		  //cut off old review through starred adjective
 		  int spaceAfterStar = review.indexOf(" ", starLoc);
@@ -165,6 +165,11 @@ if (PosNeg.toLowerCase().equals("positive"))
 		 System.out.println(newReview);
 
 	  }
+    else
+    {
+newReview+= randomNegativeAdj();
+int spaceAfterStar = review.indexOf(" ", starLoc);
+    }
  //public static String chooseSentiment (String placeholder)
   //{
     //need a scanner to ask if user wants negative review or positive
