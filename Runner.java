@@ -4,6 +4,6 @@ public class Runner
     {
 //System.out.println(Review.sentimentVal("happily"));
  //double num = Review.sentimentVal("word");
- System.out.println(Review.fakeReview("genuineReview.txt","negative"));
+ System.out.println(Review.bigSHOT("genuineReview.txt","negative"));
     }
 }
